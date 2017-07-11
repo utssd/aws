@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>BandDB -- Home</title>
-  </head>
-  <body>
-    <div id="app"></div>
-  <script type="text/javascript">/******/ (function(modules) { // webpackBootstrap
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -51178,5 +51170,4 @@ var Search = function (_React$Component) {
 module.exports = Search;
 
 /***/ })
-/******/ ]);</script></body>
-</html>
+/******/ ]);
