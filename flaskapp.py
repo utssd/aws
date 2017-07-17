@@ -6,15 +6,16 @@ Doc.
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import render_template
+from flask_cors import CORS
 import datetime
-
 
 
 app = Flask(__name__)
 
 # for test purposes, use sqlite:////path/test.db instead
 # a config file is needed
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://utssd:<CS>demima888!@banddb.cybt0ykhyacv.us-west-2.rds.amazonaws.com:5432/banddb"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://utssd:<CS>demima888!@banddb.cybt0ykhyacv.us-west-2.rds.amazonaws.com:5432/banddb2"
+CORS(app, headers=['Content-Type'])
 
 db = SQLAlchemy(app)
 
@@ -180,10 +181,11 @@ class Tours(db.Model):
     relations of tour_line_up (a table)
     """
     TourID = db.Column(db.Integer, nullable=False, primary_key=True)
-    Venue = db.Column(db.String, nullable=False)
-    Location = db.Column(db.Integer, nullable=False)
-    tDate = db.Column(db.Date, nullable=False)
+    tDate = db.Column(db.String, nullable=False)
+    Name = db.Column(db.String, nullable=False)
     Image = db.Column(db.String, nullable=True)
+    Venue = db.Column(db.String, nullable=False)
+    Locations = db.Column(db.String, nullable=False)
 
 #   Artist-tour is a one-to-many relationship
     ArtistID = db.Column(db.Integer, db.ForeignKey(
@@ -192,11 +194,15 @@ class Tours(db.Model):
     TourLineUp = db.relationship('Songs', secondary=TourLineUp, backref=db.backref(
         'tour', lazy='dynamic'))
 
-    def __init__(self, venue, location, date, **rest):
-        self.Venue = venue
-        self.Location = location
+    def __init__(self, date, name, image, venue, locations, **rest):
         self.tDate = date
+        self.Name = name
         self.Image = image
+        self.Venue = venue
+        self.Locations = locations
+
+    def __repr__(self):
+        return self.Name
 
 
 class Genre(db.Model):
@@ -239,6 +245,7 @@ class Labels(db.Model):
 
     def __repr__(self):
         return self.Name
+
 
 from sqlalchemy import func
 
@@ -330,7 +337,6 @@ class dbQuery:
         songsInfo = songs.__dict__
         return songsInfo
 
-
     def SongAlbum(self, song):
         albums = Albums.query.join(Songs).filter(Songs.Name == song).all()
         albumsInfo = [al.__dict__ for al in albums]
@@ -381,7 +387,6 @@ class dbQuery:
         albums = Albums.query.filter(Albums.AlbumID == ID).first()
         albumsInfo = albums.__dict__
         return albumsInfo
-
 
     def AlbumByArtist(self, artist):
         albums = Albums.query.join(Artists).filter(
@@ -445,20 +450,18 @@ class dbQuery:
         return albumsInfo
 
 
-
-
-import flask_restless
+from flask_restless import APIManager
 
 # Create the Flask-Restless API manager.
-manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
+manager = APIManager(app, flask_sqlalchemy_db=db)
 
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
-manager.create_api(Artists, methods=['GET'])
-manager.create_api(Songs, methods=['GET'])
-manager.create_api(Albums, methods=['GET'])
-manager.create_api(Genre, methods=['GET'])
-
+manager.create_api(Artists, methods=['GET'], results_per_page=12)
+manager.create_api(Songs, methods=['GET'], results_per_page=12)
+manager.create_api(Albums, methods=['GET'], results_per_page=12)
+manager.create_api(Genre, methods=['GET'], results_per_page=12)
+manager.create_api(Tours, methods=['GET'], results_per_page=12)
 
 @app.route('/')
 @app.route('/index')
@@ -468,117 +471,10 @@ def index():
 
     Doc.
     """
+    return render_template('index.html') 
+@app.route('/<path:path>')
+def all_other(path):
     return render_template('index.html')
-
-
-@app.route('/artist/<path:artist_name>')  # when does this get called?
-def artist(artist_name):
-    """
-    Doc.
-
-    Doc.
-    """
-    artist_name = str(artist_name.replace('%20', ' '))
-    a = dbQuery().GetArtist(artist_name)
-    s = dbQuery().ArtistSongs(artist_name)
-    al = dbQuery().AlbumByArtist(artist_name)
-    return render_template('artist-info.html', artist=a, songs=s, albums=al)
-
-
-@app.route('/artists', defaults={'sorting': 'asc', 'page': 1}, strict_slashes=False)
-@app.route('/artists/<string:sorting>/<int:page>')
-def artists(sorting, page):
-    """
-    Doc.
-
-    Doc.
-    """
-    data = dbQuery().AllArtists(sorting)
-    pages = len(data)
-    data = data[(page - 1) * 8: page * 8]
-    return render_template('artists.html', data=data, genre='',sorting=sorting,pages=pages, language='Python', framework='Flask', lang=False)
-
-
-@app.route('/artists_by_genre/<string:genre>/<string:sorting>/<int:page>')
-def artists_by_genre(genre, sorting, page):
-    data = dbQuery().ArtistByGenre(genre, sorting)
-    pages = len(data)
-    data = data[(page - 1) * 8: page * 8]
-    return render_template('artists.html', data=data, pages=pages, genre=genre, sorting=sorting,language='Python', framework='Flask', lang=False)
-
-
-@app.route('/albums/<string:album_name>')
-def album(album_name):
-    album_name = str(album_name.replace('%20', ' '))
-    a = dbQuery().GetAlbum(album_name)
-    s = dbQuery().SongByAlbum(album_name)
-    ar = dbQuery().ArtistByID(a['ArtistID'])
-    return render_template('album-info.html', album=a, songs=s, artist=ar)
-
-
-@app.route('/albums', defaults={'sorting': 'asc', 'page': 1}, strict_slashes=False)
-@app.route('/albums/<string:sorting>/<int:page>')
-def albums(sorting, page):
-    """
-    Doc.
-
-    Doc.
-    """
-    data = dbQuery().AllAlbums(sorting)
-    pages = len(data)
-    data = data[(page - 1) * 8: page * 8]
-    return render_template('albums.html', data=data, pages=pages, sorting=sorting,language='Python', framework='Flask', lang=False)
-
-
-@app.route('/tours')
-def tours():
-    """
-    Doc.
-
-    Doc.
-    """
-    return render_template('tours.html')
-
-
-@app.route('/songs/<song_name>')
-def song(song_name):
-    song_name = str(song_name.replace('%20', ' '))
-    s = dbQuery().GetSong(song_name)
-    ar = dbQuery().ArtistByID(s['ArtistID'])
-    al = dbQuery().AlbumByID(s['AlbumID'])
-    return render_template('song-info.html', song=s, album=al, artist=ar)
-
-
-@app.route('/songs', defaults={'sorting': 'asc', 'page': 1}, strict_slashes=False)
-@app.route('/songs/<string:sorting>/<int:page>')
-def songs(sorting, page):
-    """
-    Doc.
-
-    Doc.
-    """
-    data = dbQuery().AllSongs(sorting)
-    pages = len(data)
-    data = data[(page - 1) * 8: page * 8]
-    return render_template('songs.html', data=data, pages=pages, sorting=sorting,language='Python', framework='Flask', lang=False)
-
-
-@app.route('/songs_by_genre/<string:genre>/<string:sorting>/<int:page>')
-def songs_by_genre(genre, sorting, page):
-    data = dbQuery().SongByGenre(genre, sorting)
-    pages = len(data)
-    data = data[(page - 1) * 8: page * 8]
-    return render_template('songs.html', data=data, pages=pages, genre=genre, sorting=sorting,language='Python', framework='Flask', lang=False)
-
-
-@app.route('/about')
-def about():
-    """
-    Doc.
-
-    Doc.
-    """
-    return render_template('about.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -591,4 +487,3 @@ def teardown_request(exception):
         db.session.rollback()
         db.session.remove()
     db.session.remove()
-
