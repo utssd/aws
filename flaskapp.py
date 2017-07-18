@@ -541,7 +541,7 @@ def page_not_found(e):
 
 # INFO
 
-rom flask_restless import APIManager
+from flask_restless import APIManager
 
 # Create the Flask-Restless API manager.
 manager = APIManager(app, flask_sqlalchemy_db=db)
