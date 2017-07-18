@@ -8,6 +8,8 @@ app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////Users/shidashen/Desktop/IDB/IDB/test.db"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "utssd:<CS>demima888!@banddb.cybt0ykhyacv.us-west-2.rds.amazonaws.com:5432/banddb"
+                                                            banddb.cybt0ykhyacv.us-west-2.rds.amazonaws.com:5432
+
 
 db = SQLAlchemy(app)
 

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}Albums{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block currentmenuitem %}
+<li class="menu-item"><a href="/index">Home</a></li>
+<li class="menu-item"><a href="/artists">Artists</a></li>
+<li class="menu-item current-menu-item"><a href="/albums">Albums</a></li>
+<li class="menu-item"><a href="/songs">Songs</a></li>
+<li class="menu-item"><a href="/tours">Tours</a></li>
+<li class="menu-item"><a href="/about">About</a></li>
+{% endblock %}
+{% block content %}
+<main class="main-content">
+    <div class="fullwidth-block gallery">
+      <div class="container">
+        <div class="content fullwidth">
+          <h2 class="entry-title">Albums</h2>
+            <h3>Filter By</h3>
+            <dev class="my-button"><a href="/albums" class = "current-button">Show all</a></dev>
+
+            <h3>Sort By</h3>
+          <div class="my-button">
+            <a href="{{url_for('albums',sorting='asc',page=1)}}"{%if sorting == 'asc'%} class = "current-button"{% endif %}>Ascending</a>
+          </div>
+          <div class="my-button">
+            <a href="{{url_for('albums',sorting='desc',page=1)}}"{%if sorting == 'desc'%} class = "current-button"{% endif %}>Descending</a>
+          </div>
+
+          <div class="filterable-items">
+          {% for item in data %}
+            <div class="filterable-item">
+                <h3>{{item.Title}}</h3>
+              <a href="{{url_for('album',album_name=item.Title)}}"><figure><img src="{{item.Image}}" alt="" height="300" width="300"></figure></a>
+            </div>
+          {% endfor %}
+        </div>
+        </div>
+      </div>
+    </div> <!-- .testimonial-section -->
+
+    <center>
+    <body>
+
+    <div class="pagination">
+      <a href="#">&laquo;</a>
+      <a href="{{url_for('albums',sorting='asc',page=1)}}">1</a>
+      <a href="{{url_for('albums',sorting='asc',page=2)}}">2</a>
+      <a href="{{url_for('albums',sorting='asc',page=3)}}">3</a>
+      <a href="{{url_for('albums',sorting='asc',page=4)}}">4</a>
+      <a href="{{url_for('albums',sorting='asc',page=5)}}">5</a>
+      <a href="{{url_for('albums',sorting='asc',page=6)}}">6</a>
+      <a href="#">&raquo;</a>
+    </div>
+
+    </body>
+    </center>
+
+  </main> <!-- .main-content -->
+{% endblock %}

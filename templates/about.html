@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% block title %}About{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block currentmenuitem %}
+<li class="menu-item"><a href="/index">Home</a></li>
+<li class="menu-item"><a href="/artists">Artists</a></li>
+<li class="menu-item"><a href="/albums">Albums</a></li>
+<li class="menu-item"><a href="/songs">Songs</a></li>
+<li class="menu-item"><a href="/tours">Tours</a></li>
+<li class="menu-item current-menu-item"><a href="/about">About</a></li>
+{% endblock %}
+{% block content %}
+
+  <main class="main-content">
+    <div class="fullwidth-block inner-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="content">
+              <h2 class="entry-title">About</h2>
+              <h1>Motivation</h1>
+              <ul>
+        			<li>Our team was motivated to create an IMDb-like application for everything you need to know about artists and music. We were inspired by Spotify and came into realization that there needs to be a main place where people can find simple and quick information about an artist’s biography, discography, and tour dates. Our website is named “BandDB”, which stands for Band Database. We believe this website will be useful for music lovers and others alike who want to learn a little bit more about their favorite bands and artists.</li>
+        			<li>Group Name: wiggitywack</li>
+        			<li>Group Members:</li>
+              <h1></h1>
+              <ul>
+                <img src="{{url_for('static', filename='images/devs/djp.jpg')}}"/>
+              <h1>Jonathan Peacher</h1>
+              <p>I am Jonathan! I am a CS major with one year left before I graduate (i.e. I'm a Senior now I guess.)
+                  I've started programming since around highschool and have loved it ever since.
+                  <li>Boostrap, AWS setup, Data Scraping</li>
+                  <li>no. of commits: 41</li>
+                  <li>no. of issues: 11</li>
+                  <li>no. of unit tests: 29</li>
+              </p>
+                <img src="{{url_for('static', filename='images/devs/tl.jpg')}}"/>
+              <h1>Tika Lestari</h1>
+              <p>I’m a third year Computer Science major at UT, minoring in Information Studies.
+                My hobbies include playing the piano, guitar, ukulele, cooking, and petting cats.
+                <li>Apiary, Data Scraping, Flask Templates, React</li>
+                <li>no. of commits: 28</li>
+                <li>no. of issues: 10</li>
+                <li>no. of unit tests: 0</li>
+              </p>
+                <img src="{{url_for('static', filename='images/devs/ss.jpg')}}"/>
+              <h1>Shida Shen</h1>
+              <p>I am Shida. I study and research physics. I am also an enthusiastic coder.
+                <li>Apiary, Database, AWS</li>
+                <li>no. of commits: 59</li>
+                <li>no. of issues: 12</li>
+                <li>no. of unit tests: 0</li>
+              </p>
+                <img src="{{url_for('static', filename='images/devs/sb.jpg')}}"/>
+              <h1>Sarah Baxter</h1>
+              <p>I'm a fourth year Computer Science major at UT. I also have a minor in Spanish and Business.
+                <li>Data Scraping, Static Website, Flask Templates, React</li>
+                <li>no. of commits: 68</li>
+                <li>no. of issues: 10</li>
+                <li>no. of unit tests: 0</li></p>
+                <img src="{{url_for('static', filename='images/devs/mc.jpg')}}"/>
+              <h1>Mitch Chaiet (Auditor)</h1>
+              <p>University of Texas Junior with a strong passion for everything music, tech, business, and design.
+                Free time spent studying business tactics, working on my startup ConcertCam, playing open mic nights, and building innovative musical hardware.
+                <li>Data Scraping and Static Website</li>
+                <li>no. of commits: 9</li>
+                <li>no. of issues: 2</li>
+                <li>no. of unit tests: 0</li>
+              </p>
+              <li>Statistics
+              <ul>
+                <li>total no. of commits: 197</li>
+                <li>total no. of issues: 43</li>
+                <li>total no. of unit tests: 29</li>
+                <li><b>Apiary API</b>: <a href="https://docs.djpeacher.apiary.io">https://docs.djpeacher.apiary.io</a></li>
+                <li><b>GitHub Repo</b>: <a href="https://github.com/djpeacher/IDB">https://github.com/djpeacher/IDB</a></li>
+                <li><b>Trello</b>: <a href="https://trello.com/b/Xa3QhO2b/idb1">https://trello.com/b/Xa3QhO2b/idb1</a></li>
+              </ul>
+              </li>
+              <li>Data
+              <ul>
+                <li><a href="https://en.wikipedia.org/w/api.php">https://en.wikipedia.org/w/api.php</a></li>
+                        <li><a href="https://developer.spotify.com/web-api/">https://developer.spotify.com/web-api/</a></li>
+                <li>Phase 1: Since we only needed 3 instances of each model, data scraping was done manually.</li>
+                        <li>Phase 2-4: Data scraping was done automatically.</li>
+              </ul>
+              </li>
+              <li>Tools
+                  <ul>
+                <li>Hosting
+                    <ul>
+                        <li>AWS EC2 - Elastic Compute Cloud is a web service that provides computing capacity from Amazon's cloud.</li>
+                        <li>Namecheap - the domain name registrar from which we obtained our banddb.me domain.</li>
+                    </ul>
+                </li>
+                <li>API
+                    <ul>
+                        <li>Apiary - A Github tool that we used to document our API.</li>
+                    </ul>
+                </li>
+                <li>GUI
+                    <ul>
+                        <li>Bootstrap - A free and open-source front-end web framework for designing websites and web applications. It contains HTML- and CSS-based design templates as well as optional JavaScript extensions. We used Bootstrap throughout our website to style and format our data.</li>
+                    </ul>
+                </li>
+                <li>Frontend
+                    <ul>
+                        <li>JavaScript - Is a high-level, dynamic, untyped, interpreted run-time language. We used JavaScript with Bootstrap to design the front-end of our web application.</li>
+                        <li>CSS 3 - The 3rd version of CSS, a style sheet language used for describing the presentation of a document written in a markup language. We used this with Bootstrap to style our web application.</li>
+                        <li>HTML 5 - The 5th version of HTML, the standard markup language for creating web pages and web applications. We used this with Bootstrap for the front-end of our web application.</li>
+                    </ul>
+                </li>
+                <li>Other
+                    <ul>
+                        <li>Github - A web-based version control repository that our team used to maintain our source code.</li>
+                        <li>Slack - A communication tool our team used to collaborate over the course of the project. Slack is also connected to the Github repository, which allowed us to monitor the commits of individual team members and the overall progress of the team.</li>
+                        <li>Trello - A project management application that our team used to list and categorize the necessary tasks for developing our web application. It allowed us to track the progress of our team over the course of the project.</li>
+                        <li>PlanitPoker - An online application that provides an interface for Agile project teams to estimate the complexity or completion time of projects. Our team used this application to break each phase of our project into tasks and estimate the time each task would require.</li>
+                    </ul>
+                </li>
+                    </ul>
+                </li>
+                <li>Report: <a href="https://utexas.box.com/s/pmn4fuzcsur6sklj2i09o1x4q6shitkh">https://utexas.box.com/s/pmn4fuzcsur6sklj2i09o1x4q6shitkh</a></li>
+              </ul>
+              </div>
+          </div>
+          <div class="col-md-4 col-md-push-1">
+            <aside class="sidebar">
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div> <!-- .testimonial-section -->
+
+
+  </main> <!-- .main-content -->
+
+{% endblock %}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block bootstrap %}
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='bootstrap1/style.css') }}" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="{{url_for('static', filename='bootstrap1/sass/style.scss') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <!-- <link href="{{url_for('static', filename='css/theme.css') }}" rel="stylesheet"> -->
+    <link href="{{url_for('static', filename='bootstrap1/sass/layout/_content.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/layout/_footer.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/layout/_header.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/layout/_sidebar.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/libs/_component.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/libs/_global.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/libs/_mixins.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/libs/_normalize.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/libs/_settings.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/bootstrap-grid/_grid.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/bootstrap-grid/_mixins.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/bootstrap-grid/_settings.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/pages/_download.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/pages/_gallery.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/pages/_homepage.scss') }}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bootstrap1/sass/pages/_post.scss') }}" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900" rel="stylesheet" type="text/css">
+		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<!-- Loading main css file -->
+		<link rel="stylesheet" href="style.css">
+
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+
+</head>
+<div id="header">{% block header %}
+  <!-- pagination -->
+
+  <head>
+  <style>
+  .my-button {
+      display: inline-block;
+  }
+  .my-button a {
+      color: #ababab;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color .3s;
+      border: 1px solid #ddd;
+  }
+  .my-button a.active {
+      background-color: ##ababab;
+      color: white;
+      border: 1px solid #4CAF50;
+  }
+
+  .my-button a:hover:not(.active), .my-button a.current-button {color: #fd5927; border: 1px solid #fd5927;}
+  </style>
+  </head>
+<body class="header-collapse">
+
+  <div id="site-content">
+    <header class="site-header">
+      <div class="container">
+        <nav class="main-navigation">
+          <button type="button" class="toggle-menu"><i class="fa fa-bars"></i></button>
+          <ul class="menu">
+            {% block currentmenuitem %}
+            {% endblock %}
+          </ul> <!-- .menu -->
+        </nav> <!-- .main-navigation -->
+        <div class="mobile-menu"></div>
+      </div>
+    </header> <!-- .site-header -->
+  </div>
+
+{% endblock %}</div>
+
+<div id="content">{% block content %}{% endblock %}</div>
+
+
+<div id="footer">{% block footer %}
+  <!-- pagination -->
+
+  <head>
+  <style>
+  .pagination {
+      display: inline-block;
+  }
+
+  .pagination a {
+      color: #ababab;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color .3s;
+      border: 1px solid #ddd;
+  }
+
+  .pagination a.active {
+      background-color: ##ababab;
+      color: white;
+      border: 1px solid #4CAF50;
+  }
+
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+  </style>
+  </head>
+
+    <footer class="site-footer">
+      <div class="container">
+
+        <address>
+          <p>Summer CS 373: Software Engineering <br>Taught by Professor Downing<br>2017</p>
+        </address>
+
+        <p class="copy">Copyright 2017</p>
+      </div>
+    </footer> <!-- .site-footer -->
+{% endblock %}</div>
+
+  <script src="{{url_for('static', filename='bootstrap1/js/jquery-1.11.1.min.js')}}"></script>
+  <script src="{{url_for('static', filename='bootstrap1/js/plugins.js')}}"></script>
+  <script src="{{url_for('static', filename='bootstrap1/js/app.js')}}"></script>
+
+</body>
+
+</html>

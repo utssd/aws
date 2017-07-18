@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block title %}{{artist.Name}}{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block currentmenuitem %}
+  <li class="menu-item"><a href="/index">Home</a></li>
+  <li class="menu-item current-menu-item"><a href="/artists">Artists</a></li>
+  <li class="menu-item"><a href="/albums">Albums</a></li>
+  <li class="menu-item"><a href="/songs">Songs</a></li>
+  <li class="menu-item"><a href="/tours">Tours</a></li>
+  <li class="menu-item"><a href="/about">About</a></li>
+{% endblock %}
+{% block content %}
+	<body>
+		<main class="main-content">
+			<div class="fullwidth-block inner-content">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-md-7">
+							<div class="content">
+								<h2 class="entry-title">{{artist.Name}}</h2>
+								<figure class="featured-image">
+									<img src="{{artist.Image}}" alt="">
+								</figure>
+								  <h3>
+                    <ul>
+                    	Genre: {{artist.ArtistGenre[0]}}
+                    </ul>
+                  </h3>
+              </div>
+						</div>
+
+						<div class="col-md-4 col-md-push-1">
+							<aside class="sidebar">
+								<div class="widget">
+									<h3 class="widget-title">Songs</h3>
+									<ul class="discography-list">
+                    {% for s in songs%}
+										<li>
+											<figure class="cover"><img src="{{s.Image}}" alt="{{s.Name}}"></figure>
+											<div class="detail">
+												<h3><a href="{{url_for('song', song_name=s.Name )}}">{{s.Name}}</a></h3>
+											</div>
+										</li>
+                   	{% endfor %}
+									</ul>
+								</div>
+							</aside>
+						</div>
+
+						<div class="col-md-4 col-md-push-1">
+							<aside class="sidebar">
+								<div class="widget">
+									<h3 class="widget-title">Albums</h3>
+									<ul class="discography-list">
+                    {% for a in albums%}
+										<li>
+											<figure class="cover"><img src="{{a.Image}}" alt="{{a.Title}}"></figure>
+											<div class="detail">
+												<h3><a href="{{url_for('album', album_name=a.Title )}}">{{a.Title}}</a></h3>
+											</div>
+										</li>
+                   	{% endfor %}
+									</ul>
+								</div>
+							</aside>
+						</div>
+						</div>
+					</div>
+				</div>
+
+
+			</main> <!-- .main-content -->
+
+{% endblock %}

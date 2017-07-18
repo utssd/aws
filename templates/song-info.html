@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block title %}{{song.Name}}{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block currentmenuitem %}
+  <li class="menu-item"><a href="/index">Home</a></li>
+  <li class="menu-item"><a href="/artists">Artists</a></li>
+  <li class="menu-item"><a href="/albums">Albums</a></li>
+  <li class="menu-item current-menu-item"><a href="/songs">Songs</a></li>
+  <li class="menu-item"><a href="/tours">Tours</a></li>
+  <li class="menu-item"><a href="/about">About</a></li>
+{% endblock %}
+{% block content %}
+  <body>
+      <main class="main-content">
+        <div class="fullwidth-block inner-content">
+          <div class="container">
+            <div class="row">
+              
+              <div class="col-md-7">
+                <div class="content">
+                  <h2 class="entry-title">{{song.Name}}</h2>
+                  <figure class="featured-image">
+                    <img src="{{song.Image}}" alt="">
+                  </figure>
+                  <h3>
+                    <ul>
+                      <li>Release Date: {{song.Creation_Date}}</li>
+                      <!-- <li>Chart Position: {{song.Chart_Position}}</li> -->
+                      <li>Run Time: {{song.Run_Time}} seconds</li>
+                      <li>Genre: {{song.SongGenre[0]}}</li>
+                    </ul>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-md-push-1">
+                <aside class="sidebar">
+                  <div class="widget">
+                    <h3 class="widget-title">Artist</h3>
+                    <ul class="discography-list">
+                      <li>
+                        <figure class="cover"><img src="{{artist.Image}}" alt="{{artist.Name}}"></figure>
+                        <div class="detail">
+                          <h3><a href="{{url_for('artist', artist_name= artist.Name )}}">{{artist.Name}}</a></h3>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+
+              <div class="col-md-4 col-md-push-1">
+                <aside class="sidebar">
+                  <div class="widget">
+                    <h3 class="widget-title">Album</h3>
+                    <ul class="discography-list">
+                      <li>
+                        <figure class="cover"><img src="{{album.Image}}" alt="{{album.Title}}"></figure>
+                        <div class="detail">
+                          <h3><a href="{{url_for('album', album_name= album.Title )}}">{{album.Title}}</a></h3>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+
+            </div>
+          </div>
+        </div> <!-- .testimonial-section -->
+
+
+      </main> <!-- .main-content -->
+
+{% endblock %}

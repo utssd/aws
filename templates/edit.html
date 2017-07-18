@@ -1,0 +1,330 @@
+{% extends "layout.html" %}
+{% block title %}Edit{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+<style>
+html{
+    background: url("http://i.imgur.com/NUgDkU3.jpg") no-repeat;
+	background-size: cover;
+    min-height: 100%;
+}
+
+body{
+    background:none;
+}
+
+#advanced-search-form{
+    background-color: #fff;
+    max-width: 800px;
+    margin: 160px auto 0;
+    padding: 40px;
+    color: #858b8e;
+    box-shadow: 6px 6px 6px rgba(0,0,0,0.2);
+}
+
+#advanced-search-form h2{
+    padding-bottom: 20px;
+    margin: 10px 20px;
+    font-size: 24px;
+}
+
+#advanced-search-form hr{
+    margin-top: 38px;
+    margin-bottom: 54px;
+    margin-left:3px;
+    border: 1px solid #cccccc;
+
+}
+
+#advanced-search-form .form-group{
+	margin-bottom: 20px;
+    margin-left:20px;
+	width: 30%;
+    float:left;
+    text-align: left;
+}
+
+#advanced-search-form .form-control{
+    padding: 12px 20px;
+    height: auto;
+    border-radius: 2px;
+}
+
+#advanced-search-form .radio-inline{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#advanced-search-form .gender{
+    width: 30%;
+    margin-top: 30px;
+    padding-left: 20px
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#advanced-search-form .s-btn{
+    width: 46%;
+    margin: 20px auto 0;
+    display: block;
+    outline: none;
+}
+
+.my-drop {
+    width: 100%;
+    padding-top: 12px;
+    padding-right: 20px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+}
+
+.top-buffer { margin-top:10px; }
+
+@media screen and (max-width: 800px){
+    #advanced-search-form .form-group{
+        width: 45%;
+    }
+
+    #advanced-search-form{
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 560px){
+    #advanced-search-form .form-group{
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #advanced-search-form h2{
+        text-align: center;
+    }
+}
+
+</style>
+<body>
+    <div class="container" id="advanced-search-form">
+        {% if _type == 'song' %}
+            <h2>Edit Song</h2>
+            <img src = "{{ info.Image }}" style="max-width: 400px;">
+        {% elif _type == 'tour' %}
+            <h2>Edit Tour</h2>
+            <img src = "{{ info.Image }}" style="max-width: 400px;">
+        {% elif _type == 'album' %}
+            <h2>Edit Album</h2>
+            <img src = "{{ info.Image }}" style="max-width: 400px;">
+        {% elif _type == 'artist' %}
+            <h2>Edit Artist</h2>
+            <img src = "{{ info.Image }}" style="max-width: 400px;">
+        {% else %}
+            <h2>There is no such {{ _type }} model.</h2>
+        {% endif%}
+        <form method="post" action="{{ url_for('edit', _type=_type, _id=_id) }}">
+            <div class="row">
+                {% if _type == 'song' %}
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="name">Name</label>
+                        <input disabled type="text" class="form-control" placeholder="Song Name" name="name" value="{{info['Name']}}">
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="img">Image</label>
+                        <input type="text" class="form-control" placeholder="Song Image" name="img" value={{info['Image']}}>
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="release-date">Release Date</label>
+                        <input type="text" class="form-control" placeholder="Song Release Date" name="release-date" value={{info['Creation_Date']}}>
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="run-time">Run Time</label>
+                        <input type="number" min="0" class="form-control" placeholder="Song Run Time" name="run-time" value={{info['Run_Time']}}>
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="chart-position">Chart Position</label>
+                        <input type="number" min="0" class="form-control" placeholder="Song Chart Position" name="chart-position" value="{{info['Chart_Position']}}">
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="genre">Genre</label>
+                        <select multiple class="form-control" id="genres" name="genres">
+                            {% for item in genre -%}
+                                {% if item in info['SongGenre'] %}
+                                    <option selected value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% else %}
+                                    <option value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% endif%}
+                            {%- endfor %}
+                        </select>
+                    </div>
+                    <div class='col-sm-12 col-md-12 top-buffer'>
+                        <label for="select-artist">Select Artist</label>
+                        <select class="form-control" id="artists" name="artists">
+                            <option value="0">None</option>
+                            {% for item in artists -%}
+                                {% if item[1] == info['ArtistID'] %}
+                                    <option selected value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% else %}
+                                    <option value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% endif%}
+                            {%- endfor %}
+                        </select>
+                    </div>
+                    <div class='col-sm-12 col-md-12 top-buffer'>
+                        <label for="select-albums">Select Album</label>
+                          <select class="form-control" id="albums" name="albums">
+                              <option value="0">None</option>
+                              {% for item in albums -%}
+                                {% if item[1] == info['AlbumID'] %}
+                                    <option selected value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% else %}
+                                    <option value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% endif%}
+                              {%- endfor %}
+                          </select>
+                    </div>
+                {% elif _type == 'tour' %}
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="name">Name</label>
+                    <input type="text" required="true" class="form-control" placeholder="Tour Name" name="name" value="{{info['Name']}}">
+                </div>
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="img">Image</label>
+                    <input type="text" required="true" class="form-control" placeholder="Tour Image" name="img" value="{{info['Image']}}">
+                </div>
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="dates">Dates</label>
+                    <label for="release-date">(Format: DD MM YYYY, HH:MM) Ex: 29 Dec 2008, 15:54</label>
+                    <input type="text" required="true" class="form-control" placeholder="Tour Dates" name="dates" value="{{info['tDate']}}">
+                </div>
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="venue">Venue</label>
+                    <input type="text" required="true" class="form-control" placeholder="Tour Venue" name="venue" value="{{info['Venue']}}">
+                </div>
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="locations">Locations</label>
+                    <input type="text" required="true" class="form-control" placeholder="Tour Locations" name="locations" value="{{info['Locations']}}">
+                </div>
+                <div class='col-sm-12 col-md-12 top-buffer'>
+                    <label for="select-artist">Select Artist</label>
+                    <select class="form-control" id="artists" name="artists">
+                        <option value="0">None</option>
+                        {% for item in artists -%}
+                            {% if item[1] == info['ArtistID'] %}
+                                <option selected value="{{ item[1] }}">{{ item[0] }}</option>
+                            {% else %}
+                                <option value="{{ item[1] }}">{{ item[0] }}</option>
+                            {% endif%}
+                        {%- endfor %}
+                    </select>
+                </div>
+                {% elif _type == 'album' %}
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="name">Name</label>
+                    <input disabled type="text" required="true"  class="form-control" placeholder="Album Name" name="name" value="{{info['Title']}}">
+                </div>
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="img">Image (URL)</label>
+                    <input type="text" required="true"  class="form-control" placeholder="Album Image" name="img" value="{{info['Image']}}">
+                </div>
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="release-date">Release Date</label>
+                    <label for="release-date">Ex: 2008-12-29</label>
+                    <input type="text" required="true" class="form-control" placeholder="Album Release Date" name="dates" value="{{info['Year']}}">
+                </div>
+                <!-- <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="label">Label</label>
+                    <input type="text" class="form-control" placeholder="Album Label" name="label">
+                </div> -->
+                <div class="col-sm-12 col-md-12 top-buffer">
+                    <label for="chart-position">Chart Position</label>
+                    <input type="number" required="true"  min="0" class="form-control" placeholder="Album Chart Position" name="chart-position" value="{{info['US_Chart_Position']}}">
+                </div>
+                <div class='col-sm-12 col-md-12 top-buffer'>
+                    <label for="select-artist">Select Artist</label>
+                    <select class="form-control" id="artists" name="artists">
+                        <option value="0">None</option>
+                        {% for item in artists -%}
+                            {% if item[1] == info['ArtistID'] %}
+                                <option selected value="{{ item[1] }}">{{ item[0] }}</option>
+                            {% else %}
+                                <option value="{{ item[1] }}">{{ item[0] }}</option>
+                            {% endif%}
+                        {%- endfor %}
+                    </select>
+                </div>
+                {% elif _type == 'artist' %}
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="name">Name</label>
+                        <input disabled type="text" class="form-control" placeholder="Album Name" name="name" value="{{info['Name']}}">
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="img">Image</label>
+                        <input type="text" class="form-control" placeholder="Album Image" name="img" value="{{info['Image']}}">
+                    </div>
+                    <div class="col-sm-12 col-md-6 top-buffer">
+                        <label for="start-year">Start Year</label>
+                        <input type="number" min="0" class="form-control" placeholder="Start" name="start-year" value={{info['Start_Time']}}>
+                    </div>
+                    <div class="col-sm-12 col-md-6 top-buffer">
+                        <label for="end-year">End Year</label>
+                        <input type="number" min="0" class="form-control" placeholder="End" name="end-year" value={{info['End_Time']}}>
+                    </div>
+                    <div class="col-sm-12 col-md-12 top-buffer">
+                        <label for="genre">Genre</label>
+                        <select multiple class="form-control" id="genres" name="genres">
+                            {% for item in genre -%}
+                                {% if item in info['ArtistGenre'] %}
+                                    <option selected value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% else %}
+                                    <option value="{{ item[1] }}">{{ item[0] }}</option>
+                                {% endif%}
+                            {%- endfor %}
+                        </select>
+                    </div>
+                    <!-- <div class='col-sm-12 col-md-12 top-buffer'>
+                        <label for="select-albums">Select Album</label>
+                          <select multiple class="form-control" id="albums" name="albums">
+                              {% for item in albums -%}
+                                <option value="{{ item[1] }}">{{ item[0] }}</option>
+                              {%- endfor %}
+                          </select>
+                    </div>
+                    <div class='col-sm-12 col-md-12 top-buffer'>
+                        <label for="select-songs">Select Songs</label>
+                          <select multiple class="form-control" id="songs" name="songs">
+                              {% for item in songs -%}
+                                <option value="{{ item[1] }}">{{ item[0] }}</option>
+                              {%- endfor %}
+                          </select>
+                    </div>
+                    <div class='col-sm-12 col-md-12 top-buffer'>
+                        <label for="select-tours">Select Tour</label>
+                          <select multiple class="form-control" id="tours" name="tours">
+                              {% for item in tours -%}
+                                <option value="{{ item[1] }}">{{ item[0] }}</option>
+                              {%- endfor %}
+                          </select>
+                    </div> -->
+                {% endif%}
+            </div>
+
+            <div class="clearfix"></div>
+            <script src='//www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha top-buffer" data-sitekey="6Let5SgUAAAAADOF-hAru-JurTkgEI8Heb6evOcL" data-theme="light" data-type="image" data-size="normal" data-tabindex="0"></div>
+            <div class="checkbox top-buffer">
+              <label><input type="checkbox" value="1" id="delete" name="delete"> Delete?</label>
+            </div>
+            <button type="submit" class="s-btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span>Save Changes</button>
+        </form>
+    </div>
+</body>
+{% endblock %}
