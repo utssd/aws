@@ -16,7 +16,7 @@ recaptcha = ReCaptcha(app=app, site_key='6Let5SgUAAAAADOF-hAru-JurTkgEI8Heb6evOc
 
 # for test purposes, use sqlite:////path/test.db instead
 # a config file is needed
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://utssd:<CS>demima888!@banddb.cybt0ykhyacv.us-west-2.rds.amazonaws.com:5432/banddb2"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://utssd:<CS>demima888!@banddb.cybt0ykhyacv.us-west-2.rds.amazonaws.com:5432/banddb"
 
 CORS(app, headers=['Content-Type'])
 
