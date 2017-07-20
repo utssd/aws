@@ -49088,11 +49088,11 @@ var Albums = function (_React$Component) {
       });
       var filter;
       if (peak_pos === "Top 10") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 10 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 10 }];
       } else if (peak_pos === "Top 20") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 20 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 20 }];
       } else if (peak_pos === "Top 40") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 40 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 40 }];
       }
       var order_by;
       if (this.state.currentSort === 'Ascending') {
@@ -49120,11 +49120,11 @@ var Albums = function (_React$Component) {
       });
       var filter;
       if (this.state.currentFilter === "Top 10") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 10 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 10 }];
       } else if (this.state.currentFilter === "Top 20") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 20 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 20 }];
       } else if (this.state.currentFilter === "Top 40") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 40 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 40 }];
       }
       var order_by;
       if (sort === 'Ascending') {
@@ -49148,11 +49148,11 @@ var Albums = function (_React$Component) {
 
       var filter;
       if (this.state.currentFilter === "Top 10") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 10 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 10 }];
       } else if (this.state.currentFilter === "Top 20") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 20 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 20 }];
       } else if (this.state.currentFilter === "Top 40") {
-        filter = [{ 'name': 'US_Chart_Postion', 'op': '<=', 'val': 40 }];
+        filter = [{ 'name': 'US_Chart_Position', 'op': '<=', 'val': 40 }];
       }
       var order_by;
       if (this.state.currentSort === 'Ascending') {
